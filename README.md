@@ -251,8 +251,89 @@ FROM (
 ) AS categorized_content
 GROUP BY category;
 ```
-
 **Objective:** Categorize content as 'Bad' if it contains 'kill' or 'violence' and 'Good' otherwise. Count the number of items in each category.
+
+### 16.Which content type drives the platform more: Movies or TV Shows?
+
+```sql
+SELECT 
+    type,
+    COUNT(*) AS total_content,
+    ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 2) AS percentage
+FROM netflix
+GROUP BY type;
+```
+
+### 17.Which countries should Netflix target for new content production?
+
+```sql
+SELECT 
+    UNNEST(STRING_TO_ARRAY(country,',')) AS country,
+    COUNT(*) AS total_content
+FROM netflix
+GROUP BY country
+ORDER BY total_content DESC
+LIMIT 10;
+```
+
+### 18.Which year had the highest content growth compared to the previous year?
+
+```sql
+WITH yearly AS (
+    SELECT release_year, COUNT(*) AS total
+    FROM netflix
+    GROUP BY release_year
+)
+SELECT 
+    release_year,
+    total,
+    total - LAG(total) OVER (ORDER BY release_year) AS growth
+FROM yearly
+ORDER BY growth DESC
+LIMIT 1;
+```
+
+### 19.Which directors consistently deliver more content?
+
+```sql
+SELECT 
+    director,
+    COUNT(*) AS total_titles
+FROM netflix
+WHERE director IS NOT NULL
+GROUP BY director
+ORDER BY total_titles DESC
+LIMIT 10;
+```
+
+### 20.Do longer movies dominate the platform?
+
+```sql
+SELECT 
+    CASE 
+        WHEN CAST(SPLIT_PART(duration,' ',1) AS INT) <= 90 THEN 'Short'
+        WHEN CAST(SPLIT_PART(duration,' ',1) AS INT) BETWEEN 91 AND 120 THEN 'Medium'
+        ELSE 'Long'
+    END AS movie_length_category,
+    COUNT(*) AS total_movies
+FROM netflix
+WHERE type='Movie'
+GROUP BY movie_length_category;
+```
+
+### 21.Is violent content dominating the platform?
+
+```sql
+SELECT 
+    CASE
+        WHEN description ILIKE '%kill%' OR description ILIKE '%violence%'
+        THEN 'Violent Content'
+        ELSE 'Non-Violent Content'
+    END AS content_type,
+    COUNT(*) AS total_titles
+FROM netflix
+GROUP BY content_type;
+```
 
 ## Findings and Conclusion
 
@@ -262,3 +343,7 @@ GROUP BY category;
 - **Content Categorization:** Categorizing content based on specific keywords helps in understanding the nature of content available on Netflix.
 
 This analysis provides a comprehensive view of Netflix's content and can help inform content strategy and decision-making.
+
+## Author - Rajath
+
+This project is part of my portfolio, showcasing the SQL skills essential for data analyst roles.
