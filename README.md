@@ -38,13 +38,13 @@ description VARCHAR(250)
 
 ## Business Problems and Solutions
 
---1. Count the number of Movies vs TV Shows
+## 1. Count the number of Movies vs TV Shows
 select count(*) as Total_Contetns ,type
 from netflix
 group by type;
 	
 
---2. Find the most common rating for movies and TV shows
+## 2. Find the most common rating for movies and TV shows
 
 SELECT
 	type,
@@ -62,11 +62,11 @@ SELECT
 WHERE 
 	ranking=1;
 
---3. List all movies released in a specific year (e.g., 2020)
+## 3. List all movies released in a specific year (e.g., 2020)
 
 SELECT * from netflix where release_year='2020' and type='Movie';
 
---4. Find the top 5 countries with the most content on Netflix
+## 4. Find the top 5 countries with the most content on Netflix
 
 SELECT 
 	COUNT(*) as TOTAL_CONTENT,
