@@ -263,6 +263,7 @@ SELECT
 FROM netflix
 GROUP BY type;
 ```
+**Objective:** Helps Netflix decide where to invest more budget (movies vs series).
 
 ### 17.Which countries should Netflix target for new content production?
 
@@ -275,6 +276,7 @@ GROUP BY country
 ORDER BY total_content DESC
 LIMIT 10;
 ```
+**Objective:** Identifies high-consumption regions → expansion & localization strategy.
 
 ### 18.Which year had the highest content growth compared to the previous year?
 
@@ -292,6 +294,7 @@ FROM yearly
 ORDER BY growth DESC
 LIMIT 1;
 ```
+**Objective:** Identifies peak business performance year.
 
 ### 19.Which directors consistently deliver more content?
 
@@ -305,6 +308,7 @@ GROUP BY director
 ORDER BY total_titles DESC
 LIMIT 10;
 ```
+**Objective:** Helps Netflix prioritize long-term contracts with top directors.
 
 ### 20.Do longer movies dominate the platform?
 
@@ -320,6 +324,8 @@ FROM netflix
 WHERE type='Movie'
 GROUP BY movie_length_category;
 ```
+**Objective:** Used to optimize user watch-time strategy.
+
 
 ### 21.Is violent content dominating the platform?
 
@@ -334,6 +340,7 @@ SELECT
 FROM netflix
 GROUP BY content_type;
 ```
+**Objective:** Important for content moderation, parental control & brand safety.
 
 ## Findings and Conclusion
 
