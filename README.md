@@ -18,8 +18,6 @@ The data for this project is sourced from the Kaggle dataset:
 
 ## Schema
 
-```sql
-
 CREATE TABLE netflix
 (
 show_id VARCHAR (6),
@@ -38,3 +36,8 @@ description VARCHAR(250)
 
 ## Business Problems and Solutions
 
+## 1. Count the number of Movies vs TV Shows
+
+select count(*) as Total_Contetns ,type
+from netflix
+group by type;
